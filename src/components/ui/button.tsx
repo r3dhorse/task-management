@@ -11,19 +11,14 @@ const buttonVariants = cva(
       variant: {
         primary:
           "bg-gradient-to-b from-blue-600 to-blue-700 text-white shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500",
-
+        secondary:
+          "bg-white text-gray-900 border border-gray-300 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1",
         destructive:
           "bg-gradient-to-b from-amber-600 to-amber-700 text-white shadow-sm hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-amber-500",
-
         outline:
           "border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400",
-
-        secondary:
-          "bg-white text-gray-900 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400",
-
         ghost:
           "bg-transparent text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300",
-
         link: "text-blue-600 underline underline-offset-4 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300",
         muted:
           "bg-gray-100 text-gray-500 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300",
