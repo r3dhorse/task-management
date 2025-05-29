@@ -120,6 +120,17 @@ export const SignUpCard = () => {
           </form>
         </Form>
       </CardContent>
+      <div>
+        <DottedSeparator />
+        <CardContent className="p-7 text-center">
+          <p>
+            Already have an account?{" "}
+            <a href="/sign-in" className="text-blue-500 hover:underline">
+              Sign In
+            </a>
+          </p>
+        </CardContent>
+      </div>
     </Card>
   );
 };

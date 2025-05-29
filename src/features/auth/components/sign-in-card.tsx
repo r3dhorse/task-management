@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
@@ -95,6 +96,17 @@ export const SignInCard = () => {
             <FcGoogle className="size-5" />
             Login with Google
           </Button>
+        </CardContent>
+      </div>
+      <div>
+        <DottedSeparator />
+        <CardContent className="p-7 text-center">
+          <p className="text-sm text-muted-foreground">
+            Don't have an account?{" "}
+            <Link href="/sign-up" className="text-blue-500 hover:underline">
+              Sign Up
+            </Link>
+          </p>
         </CardContent>
       </div>
     </Card>
