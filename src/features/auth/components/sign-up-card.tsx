@@ -1,6 +1,15 @@
-import { FcGoogle } from "react-icons/fc";
+import { z } from "zod";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 import {
   Card,
   CardContent,
@@ -10,7 +19,26 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
+const formSchema = z.object({
+  name: z.string().trim().min(1, "Required"),
+  email: z.string().email(),
+  password: z.string().min(8, "Minimum of 8 characters required"),
+});
+
 export const SignUpCard = () => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      name: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log({ data });
+  };
+
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex items-center justify-center text-center p-7">
@@ -31,43 +59,66 @@ export const SignUpCard = () => {
         <DottedSeparator />
       </div>
       <CardContent className="p-7">
-        <form className="space-y-4">
-          <Input
-            required
-            type="text"
-            value={""}
-            placeholder="Enter your full name"
-            onChange={() => {}}
-            disabled={false}
-            min={8}
-            max={256}
-          />
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="email"
+                      placeholder="Enter email address"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Input
-            required
-            type="email"
-            value={""}
-            placeholder="Enter your email"
-            onChange={() => {}}
-            disabled={false}
-          />
+            <FormField
+              name="name"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="text"
+                      placeholder="Enter your full name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Input
-            required
-            type="password"
-            value={""}
-            placeholder="Enter your password"
-            onChange={() => {}}
-            disabled={false}
-            min={8}
-            max={256}
-          />
-          <div className="w-full">
-            <Button disabled={false} size="lg" className="w-full">
-              Register
-            </Button>
-          </div>
-        </form>
+            <FormField
+              name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder="Enter your password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="w-full">
+              <Button disabled={false} size="lg" className="w-full">
+                Register
+              </Button>
+            </div>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );
