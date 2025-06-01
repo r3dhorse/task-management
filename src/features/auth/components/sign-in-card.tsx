@@ -14,22 +14,18 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-
-const formSchema = z.object({
-  email: z.string().trim().email(),
-  password: z.string().min(1, "Required").max(256),
-});
+import { loginSchema } from "../schemas";
 
 export const SignInCard = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = (data: z.infer<typeof loginSchema>) => {
     console.log({ data });
   };
 
@@ -102,7 +98,7 @@ export const SignInCard = () => {
         <DottedSeparator />
         <CardContent className="p-7 text-center">
           <p className="text-sm text-muted-foreground">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/sign-up" className="text-blue-500 hover:underline">
               Sign Up
             </Link>
