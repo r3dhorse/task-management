@@ -18,6 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, "Required"),
@@ -125,9 +126,9 @@ export const SignUpCard = () => {
         <CardContent className="p-7 text-center">
           <p>
             Already have an account?{" "}
-            <a href="/sign-in" className="text-blue-500 hover:underline">
+            <Link href="/sign-in" className="text-blue-500 hover:underline">
               Sign In
-            </a>
+            </Link>
           </p>
         </CardContent>
       </div>
