@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
   Form,
@@ -15,18 +14,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { loginSchema } from "../schemas";
+import { useLogin } from "../api/use-login";
 
 export const SignInCard = () => {
+  const { mutate } = useLogin();
+
   const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: {},
   });
 
-  const onSubmit = (data: z.infer<typeof loginSchema>) => {
-    console.log({ data });
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    mutate({
+      json: values,
+    });
   };
 
   return (
