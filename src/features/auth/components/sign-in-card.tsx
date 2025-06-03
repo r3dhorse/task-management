@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { z } from "zod";
 import {
@@ -17,22 +18,24 @@ import { loginSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
 
 export const SignInCard = () => {
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
-    defaultValues: {},
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    mutate({
-      json: values,
-    });
+    mutate(values);
   };
 
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl">Welcom Back!</CardTitle>
+        <CardTitle className="text-2xl">Welcome Back!</CardTitle>
       </CardHeader>
       <div className="px-7">
         <DottedSeparator />
@@ -74,8 +77,8 @@ export const SignInCard = () => {
             />
 
             <div className="w-full">
-              <Button disabled={false} size="lg" className="w-full">
-                Sign In
+              <Button disabled={isPending} size="lg" className="w-full" type="submit">
+                {isPending ? "Signing in..." : "Sign In"}
               </Button>
             </div>
           </form>
@@ -88,6 +91,8 @@ export const SignInCard = () => {
             variant="secondary"
             size="lg"
             className="w-full flex items-center justify-center"
+            disabled={isPending}
+            type="button"
           >
             <FcGoogle className="size-5" />
             Login with Google
