@@ -5,8 +5,12 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { ApiError } from "@/lib/api-errors";
 
-type ResponseType = InferResponseType<(typeof client.api.auth.register)["$post"]>;
-type RequestType = InferRequestType<(typeof client.api.auth.register)["$post"]>["json"];
+type ResponseType = InferResponseType<
+  (typeof client.api.auth.register)["$post"]
+>;
+type RequestType = InferRequestType<
+  (typeof client.api.auth.register)["$post"]
+>["json"];
 
 export const useRegister = () => {
   const router = useRouter();
@@ -15,12 +19,12 @@ export const useRegister = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (data) => {
       const response = await client.api.auth.register.$post({ json: data });
-      
+
       if (!response.ok) {
-        const error = await response.json() as ApiError;
+        const error = (await response.json()) as unknown as ApiError;
         throw new Error(error.error || "Registration failed");
       }
-      
+
       return await response.json();
     },
     onSuccess: () => {
